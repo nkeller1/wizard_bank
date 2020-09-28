@@ -7,12 +7,19 @@ RSpec.describe Bank do
 
     expect(bank).to be
     expect(bank.name).to eq('Chase')
+    expect(bank.name).not_to eq('Wells Fargo')
   end
 
   it "can have an account opened with a person" do
     bank = Bank.new("Chase")
     person = Person.new("Minerva", 1000)
+    # require "pry"; binding.pry
+    expect do
+      bank.open_account(person)
+    end.to output("An account has been opened for Minerva with Chase.\n").to_stdout
 
-    expect(bank.open_account(person)).to include("An account has been opened for Minerva with Chase.")
+    expect do
+      bank.open_account(person)
+    end.not_to output("blank").to_stdout
   end
 end
